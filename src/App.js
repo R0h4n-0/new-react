@@ -43,9 +43,9 @@ function App(){
     return product.name.toLowerCase().includes(search.toLowerCase());
   })
   .filter((product) =>{
-    if (inStockOnly){
+    if (inStockOnly)
       return product.stocked;
-    }
+    
     return true;
   });
   // .filter((product) =>{
