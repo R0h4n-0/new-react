@@ -16,7 +16,7 @@ const products = [
 
 function App(){
   const[search, setSearch] = useState('');
-
+  const[selectedCategory, setSelectedCCategory] = useState("")
   const[inStockOnly, setinStockOnly] = useState(false);
 
   const handleChange = (e) =>{
@@ -26,16 +26,33 @@ function App(){
   const toggleInStock = (e)=> {
     setinStockOnly(e.target.checked);
   }
-  return(
-    <div className='app'>
-     <input onChange={handleChange} value={search} placeholder='Search....'/>
-     <div>
-     <input type='checkbox' onChange={toggleInStock} checked={inStockOnly} id='checkbox'/>
-     <label htmlFor='checkbox'>Show only products in stock</label>
-     </div>
-     <ProductsTable category="Fruits" products={products}/>
-     {/* <ProductsTable category="Vegetables"/> */}
+  const selectCategory = (e) =>{
+    setSelectedCCategory(e.target.value);
+    console.log(e.target.value);
+  };
+  return (
+    <div className="app">
+      <input onChange={handleChange} value={search} placeholder="Search ..." />
+      <div className="flex justify-between">
+        <div>
+          <input
+            type="checkbox"
+            onChange={toggleInStock}
+            checked={inStockOnly}
+            id="checkbox"
+          />
+          <label htmlFor="checkbox">Show only products in stock</label>
+        </div>
+        <div>
+          <select value={selectedCategory} onChange={selectCategory}>
+            <option value="">All</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Vegetables">Vegetables</option>
+          </select>
+        </div>
+      </div>
+      <ProductsTable category="Fruits" products={products} />
     </div>
-  )
-};
+  );
+}
 export default App;
