@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import './App.css';
 import { useState } from 'react';
@@ -16,20 +16,43 @@ const products = [
 
 function App(){
   const[search, setSearch] = useState('');
-  const[selectedCategory, setSelectedCCategory] = useState("")
+  const[selectedCategory, setSelectedCategory] = useState("")
   const[inStockOnly, setinStockOnly] = useState(false);
 
   const handleChange = (e) =>{
     setSearch (e.target.value);
   };
 
+
   const toggleInStock = (e)=> {
     setinStockOnly(e.target.checked);
   }
+
+
   const selectCategory = (e) =>{
-    setSelectedCCategory(e.target.value);
+    setSelectedCategory(e.target.value);
     console.log(e.target.value);
   };
+
+  const filteredProducts = products.filter((product) =>{
+    if(selectedCategory === ''){
+      return true;
+    }
+    return product.category === selectedCategory;
+  }).filter((product) =>{
+    return product.name.toLowerCase().includes(search.toLowerCase());
+  })
+  .filter((product) =>{
+    if (inStockOnly){
+      return product.stocked;
+    }
+    return true;
+  });
+  // .filter((product) =>{
+  //   return product.stocked
+  // });
+
+
   return (
     <div className="app">
       <input onChange={handleChange} value={search} placeholder="Search ..." />
@@ -45,13 +68,13 @@ function App(){
         </div>
         <div>
           <select value={selectedCategory} onChange={selectCategory}>
-            <option value="">All</option>
+            <option value="All">All</option>
             <option value="Fruits">Fruits</option>
             <option value="Vegetables">Vegetables</option>
           </select>
         </div>
       </div>
-      <ProductsTable category="Fruits" products={products} />
+      <ProductsTable category={selectedCategory} products={filteredProducts} />
     </div>
   );
 }
