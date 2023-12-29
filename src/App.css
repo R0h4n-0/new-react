@@ -45,3 +45,6 @@
 .justify-between{
   justify-content: space-between;
 }
+.mx-4{
+  margin: 16px;
+}
